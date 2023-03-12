@@ -1,0 +1,51 @@
+const doc = require('../../models/doctorModel')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+module.exports = {
+    mobileExist: (req, res) => {
+        try {
+            doc.findOne({ mobile: req.body.mobile }).then(async (response) => {
+                if (response) {
+                    return res.sendStatus(409); //user already exist
+                } else {
+                    return res.sendStatus(200);
+                }
+            })
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
+    docSignup: async (req, res) => {
+        try {
+            doc.findOne({ mobile: req.body.mobile }).then(async (response) => {
+                if (response) {
+                    return res.sendStatus(409); //user already exist
+                } else {
+                    req.body.password = await bcrypt.hash(req.body.password, 10)
+                    await doc.create(req.body).then((response) => {
+                        const accessToken = jwt.sign({
+                            id: response._id
+                        }, 'secretKey',
+                            { expiresIn: '7d' }
+                        );
+                        res.status(201).json({ accessToken })
+                    })
+                }
+            })
+        } catch (error) {
+            console.log(error.message);
+        }
+    },
+
+    getDoctors: async (req, res) => {
+        try {
+            doc.find({ approved: true }).then(docDatas => {
+                res.status(200).json({ docDatas })
+            })
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
+}
