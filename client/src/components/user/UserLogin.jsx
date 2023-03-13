@@ -1,22 +1,21 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import axios from "../../api/axios";
 import Google from "../../assets/Google.png";
 import SignImage from "./SignImageSection";
-const LOGIN_URL = "/signin";
-import { useDispatch } from "react-redux";
-import { setUserDetails } from "../../redux/features/userSlice";
-import ForgotPassword from "./ForgotPassword";
+import { useDispatch, useSelector } from "react-redux";
+import { signinThunk } from "../../redux/thunk/user";
 
 import { auth, provider } from '../../firebase'
 import { signInWithPopup } from "firebase/auth";
 
 function UserLogin() {
-  const { setAuth } = useAuth();
 
+  const { setAuth } = useAuth();
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -41,41 +40,7 @@ function UserLogin() {
 
   const handleSigninSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const { data } = await axios.post(
-        LOGIN_URL,
-        JSON.stringify({ mobile, password: pwd }),
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-
-      const accessToken = data.accessToken
-
-      setAuth({ mobile, password, accessToken });
-
-      localStorage.setItem("user", accessToken);
-
-      dispatch(setUserDetails({ name: data.name, mobile: data.mobile }));
-      setMobile("");
-      setPwd("");
-      navigate(from, { replace: true });
-    } catch (error) {
-
-      if (!error?.response) {
-        setErrMsg("no server response");
-      } else if (error.repsonse?.status === 400) {
-        setErrMsg("missing mobile or password");
-      } else if (error.response?.status === 401) {
-        setErrMsg("Unauthorized");
-      } else if (error.response?.status === 403) {
-        setErrMsg("You are Blocked!");
-      } else {
-        setErrMsg("login failed");
-      }
-      errRef.current.focus();
-    }
+    dispatch(signinThunk({ mobile, password: pwd }));
   };
 
   const [value, setValue] = useState()
@@ -91,8 +56,9 @@ function UserLogin() {
   })
 
   return (
-    <div>
-      {value ? navigate("/") :
+    <>
+      {user?.isLoggedIn && <Navigate to="/" replace />}
+      <div>
         <div className="pb-0 sm:pb-32">
           <div className="w-screen sm:container mx-auto">
             <div className="flex flex-col sm:flex-row justify-between items-center">
@@ -106,14 +72,9 @@ function UserLogin() {
                     <p className="text-md py-2 font-sans">
                       To take appoinments
                     </p>
-                    <p ref={errRef} className={errMsg ? "errMsg text-red-600" : "hidden  "}>
-                      {errMsg}
+                    <p ref={errRef} className={user.signin.errMsg ? "errMsg text-red-600" : "hidden  "}>
+                      {user.signin.errMsg}
                     </p>
-
-
-
-
-
                     <form onSubmit={handleSigninSubmit}>
                       <div>
                         <input
@@ -191,8 +152,8 @@ function UserLogin() {
             </div>
           </div>
         </div>
-      }
     </div>
+    </>
   );
 }
 

@@ -5,11 +5,12 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
     signin: async (req, res) => {
-        try {
-            const { mobile, password } = req.body
-            if (!mobile || !password) return res.status(400).json({ 'message': 'mobile number and password required.' });
-            else {
-                //checking user exist with his mobile
+
+        const { mobile, password } = req.body
+        if (!mobile || !password) return res.status(400).json({ 'message': 'mobile number and password required.' });
+        else {
+            //checking user exist with his mobile
+            try {
                 const foundUser = await doc.findOne({ mobile })
 
                 if (foundUser && (await bcrypt.compare(password, foundUser.password))) {
@@ -21,12 +22,14 @@ module.exports = {
                         const accessToken = jwt.sign({ id: foundUser._id, }, 'secretKey', { expiresIn: '7d' });
                         res.status(200).json({ accessToken, name: foundUser.name, mobile: foundUser.mobile });
                     }
+
                 } else {
                     res.status(401).json({ message: 'invalid mobile or password' }) // unauthorized
                 }
+            } catch {
+                console.log(error.message)
+                res.status(400).json({ message: 'error occured', err: error.message })
             }
-        } catch (error) {
-            console.log(error.message);
         }
     }
 }

@@ -39,23 +39,28 @@ module.exports = {
             console.log(error.message);
         }
     },
-    userSignin: async (req, res) => {
+        userSignin: async (req, res) => {
         try {
             const { mobile, password } = req.body
+            console.log(req.body);
             if (!mobile || !password) return res.status(400).json({ 'message': 'mobile number and password required.' });
             else {
 
                 const foundUser = await users.findOne({ mobile })
-                if (!foundUser) return res.sendStatus(401); //unauthorized
-                else {
+                console.log('matchedhey');
 
+                if (!foundUser) res.status(401).json({message:'unauthorized'}) //unauthorized
+                else {
                     const match = await bcrypt.compare(password, foundUser.password)
+                    console.log('matchedhu');
+
                     if (match) {
+                        console.log('matched');
                         const accessToken = jwt.sign({ id: foundUser._id, }, 'secretKey', { expiresIn: '7d' });
                         res.status(200).json({ accessToken, name: foundUser.name, mobile: foundUser.mobile });
 
                     } else {
-                        res.sendStatus(401)
+                        res.status(401).json({message:'error occured'})
                     }
                 }
             }

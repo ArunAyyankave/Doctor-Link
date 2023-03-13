@@ -1,12 +1,29 @@
-import { configureStore } from "@reduxjs/toolkit";
-import adminSlice from "./features/adminSlice";
-import loadingSlice from "./features/loadingSlice";
-import userSlice from "./features/userSlice";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from 'redux-persist'
+import storage from 'redux-persist/lib/storage';
+import thunk from 'redux-thunk'
 
-export default configureStore({
-    reducer: {
-        loading:loadingSlice,
-        user:userSlice,
-        admin:adminSlice
-    }
+import loadingReducer from "./features/loadingSlice";
+import userReducer from "./features/userSlice";
+import adminReducer from "./features/adminSlice";
+// import doctorReducer from "./features/doctorSlice";
+
+const persistConfig = {
+    key: 'root',
+    storage
+}
+const reducer = combineReducers({
+    loading: loadingReducer,
+    user: userReducer,
+    admin: adminReducer,
+    // doctor: doctorReducer
 })
+
+const persistedReducer = persistReducer(persistConfig, reducer)
+
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: [thunk]
+})
+
+export const persistor = persistStore(store)
