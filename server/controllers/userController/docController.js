@@ -47,5 +47,15 @@ module.exports = {
         } catch (error) {
             console.log(error.message);
         }
+    },
+
+    getDoctor: async (req,res)=>{
+        const {_id} = req.params;
+        doc.findOne({_id}).then(response => {
+            res.status(200).json(response);
+        }).catch(err=>{
+            console.log(err)
+            res.status(400).json({message:'error occured'})
+        })
     }
 }

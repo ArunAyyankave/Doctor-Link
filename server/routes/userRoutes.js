@@ -13,5 +13,6 @@ router.post('/docMobile',docController.mobileExist)
 router.post('/docSignup',docController.docSignup)
 
 router.get('/getDoctors',docController.getDoctors)
+router.get('/doctor/:_id',docController.getDoctor)
 
 module.exports = router;

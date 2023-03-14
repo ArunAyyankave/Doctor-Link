@@ -22,10 +22,10 @@ function BookingSection() {
                     </div>
                     <div className='pt-3'>
                       <div className='border p-1 flex justify-between items-center bg-[#F3F5F9]'>
-                        <div>
+                        {/* <div>
                           <h1 className='text-bold text-xl'>₹500</h1>
                           <p className='text-sm text-[#504a4ad0]'>/person</p>
-                        </div>
+                        </div> */}
                         <div className='pl-3'>
                           <button className='bg-green-400/70 text-white px-2 rounded'>BOOK</button>
                         </div>
@@ -38,10 +38,10 @@ function BookingSection() {
                     </div>
                     <div className='pt-3'>
                       <div className='border p-1 flex justify-between items-center bg-[#F3F5F9]'>
-                        <div>
+                        {/* <div>
                           <h1 className='text-bold text-xl'>₹500</h1>
                           <p className='text-sm text-[#504a4ad0]'>person</p>
-                        </div>
+                        </div> */}
                         <div className='pl-3'>
                           <button className='bg-green-400/70 text-white px-2 rounded'>BOOK</button>
                         </div>

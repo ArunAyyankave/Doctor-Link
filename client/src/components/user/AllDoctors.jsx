@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { ShareIcon } from "../../assets/ShareIcon";
-import doctorImage from "../../assets/doctorImage.jpg";
 import banner from "../../assets/banner.png";
 
 import axios from "../../api/axios";
 import { useEffect } from "react";
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 function AllDocotors() {
 
   const [doc, setDocs] = useState([])
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios.get('/getDoctors').then(({ data }) => {
@@ -30,11 +31,10 @@ function AllDocotors() {
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 place-items-center 2xl:grid-cols-4 py-24 ">
 
           {doc.map((d) => (
-            <Link to="/doctorDetails" className='link'>
-              <div className="w-full p-4 lg:w-72 2xl:w-80 rounded-lg shadow-xl mt-20 scale-100 hover:scale-105 ease-in duration-200 bg-white">
+              <div className="w-full p-4 lg:w-72 2xl:w-80 rounded-lg shadow-xl mt-20 scale-100 hover:scale-105 ease-in duration-200 bg-white" onClick={()=>navigate(`/doctorDetails/${d._id}`)}>
                 <div className="wrapper antialiased -mt-16">
                   <img
-                    src={doctorImage}
+                    src={d.imageUrl}
                     alt=""
                     className="h-44 w-full object-cover rounded-lg shadow-md "
                   />
@@ -114,7 +114,6 @@ function AllDocotors() {
                 </div>
 
               </div>
-            </Link>
           ))}
 
         </div>

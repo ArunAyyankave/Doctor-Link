@@ -19,7 +19,7 @@ function UserRoutes() {
         <Route index element={<DoctorsPage />} />
         <Route path="signin" element={<UnAuthenticatedRoute><Signin /></UnAuthenticatedRoute>} />
         <Route path="signup" element={<Signup />} />
-        <Route path="doctorDetails" element={<DoctorDetails />} />
+        <Route path="doctorDetails/:id" element={<DoctorDetails />} />
         <Route path="forgotPwd" element={<ForgotPwd />} />
         <Route path="doctorSignup" element={<DoctorSignup />} />
         <Route path="appointments" element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>} />
