@@ -9,8 +9,8 @@ import Profile from "../pages/user/Profile";
 import ForgotPwd from "../pages/user/ForgotPwd";
 import DoctorSignup from "../pages/user/DoctorSignup";
 
-import AuthenticatedRoute from "../util/authenticatedRoute";
-import UnAuthenticatedRoute from "../util/unAuthenticatedRoute";
+import AuthenticatedRoute from "../util/AuthenticatedRoute";
+import UnAuthenticatedRoute from "../util/UnAuthenticatedRoute";
 
 function UserRoutes() {
   return (

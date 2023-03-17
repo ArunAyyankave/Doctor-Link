@@ -422,18 +422,16 @@ function UserSignup() {
                         src={Google}
                         className="h-6 ml-10 sm:ml-16  -mt-10 select-none pointer-events-none"
                         alt=""
-                        s
                       />
                     </div>
                   </div>
                   <div className="place-content-center">
                     <p className="px-16 py-10">
                       already have an account?
-                      <Link to="/signin">
-                        <span className="text-blue-800 hover:text-blue-900 hover:underline cursor-pointer">
-                          <Link to="/Signin" className='link'>Signin</Link>
-                        </span>
-                      </Link>
+                      <span className="text-blue-800 hover:text-blue-900 hover:underline cursor-pointer">
+                        {" "}
+                        <Link to="/signin" className='link'>Signin</Link>
+                      </span>
                     </p>
                   </div>
                 </div>

@@ -20,9 +20,9 @@ function UserNavbar(props) {
           </div>
           {location.pathname === '/' && <Search onSearchData={props.onSearchData}/>}
           <div className='items-center'>
-            <a className='text-xs sm:text-lg cursor-pointer hover:text-blue-500 duration-500'>
-              <Link to="/appointments" className='link'>Appointments</Link>
-            </a>
+            
+              <Link to="/appointments" className='link text-xs sm:text-lg cursor-pointer hover:text-blue-500 duration-500'>Appointments</Link>
+           
             {isLoggedIn ? (
               <button
                 className="bg-blue-500 text-white font-[Poppins] duration-500 p-1 sm:px-4 py-0 text-xs sm:text-lg sm:py-1 mx-3 sm:mx-4 hover:bg-blue-600 rounded "

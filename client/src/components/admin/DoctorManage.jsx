@@ -146,7 +146,7 @@ function DoctorManage() {
             <tbody>
               {filteredData.length ? (
                 filteredData.map((doc) => (
-                  <tr className="bg-[#189AB4] border-b border-[#05445E]">
+                  <tr className="bg-[#189AB4] border-b border-[#05445E]" key={doc._id}>
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-[#D4F1F4] whitespace-nowrap dark:text-[#D4F1F4]"
@@ -196,7 +196,7 @@ function DoctorManage() {
                   </tr>
                 ))
               ) : (
-                <div className=" p-4">No doctors available</div>
+                <tr className=" p-4"><td>No doctors available</td></tr>
               )}
             </tbody>
           </table>

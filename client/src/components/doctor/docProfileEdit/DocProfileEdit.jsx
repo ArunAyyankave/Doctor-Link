@@ -30,11 +30,15 @@ function DocProfileEdit() {
       const { data } = await axios.post('https://api.cloudinary.com/v1_1/desr7slhc/image/upload', formData);
       const imageUrl = data.secure_url
 
+      let token = localStorage.getItem('doc')
       const response = await axios.post(
-        `/doctor/completeprofile/63f842dec15a42a2e0da913b`,
+        `/doctor/completeprofile`,
         JSON.stringify({ name, mobile, email, spec, qual, exp, fees, place, imageUrl }),
         {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+          },
           withCredentials: true,
         }
       );
@@ -53,8 +57,8 @@ function DocProfileEdit() {
 
 
   return (
-    <div class="p-4 sm:ml-64">
-      <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg">
+    <div className="p-4 sm:ml-64">
+      <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg">
         <div className='bg-gradient-to-r from-emerald-50 to-emerald-100 py-32 sm:px-16 lg:px-32 xl:px-20 '>
           <div className='container'>
             <div className='w-full h-45 bg-white shadow-md rounded-md p-8 space-y-6 '>

@@ -34,9 +34,9 @@ function Dashboard() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </div>
@@ -54,9 +54,9 @@ function Dashboard() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </div>
@@ -92,9 +92,9 @@ function Dashboard() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
             </div>
@@ -113,9 +113,9 @@ function Dashboard() {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
                 ></path>
               </svg>
@@ -128,9 +128,10 @@ function Dashboard() {
         </div>
         <div className="grid grid-cols-2 mt-6 gap-4 mb-4">
           <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <p className="text-lg m-1 capitalize text-[#D4F1F4]">New Doctor Requests</p>
             <table className="w-full  text-left text-[#D4F1F4] dark:text-blue-100">
               <thead className="text-xs text-[#D4F1F4] uppercase bg-[#05445E] dark:text-white">
-                <p className="text-lg m-1 capitalize">New Doctor Requests</p>
+                
                 <tr className="border border-[#189AB4]">
                   <th scope="col" className="px-6 py-3">
                     Doctor name
@@ -157,13 +158,13 @@ function Dashboard() {
                   >
                     Arun
                   </th>
-                  <td class="px-6 py-4">Kannur</td>
-                  <td class="px-6 py-4">General</td>
-                  <td class="px-6 py-4">SIMS</td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">Kannur</td>
+                  <td className="px-6 py-4">General</td>
+                  <td className="px-6 py-4">SIMS</td>
+                  <td className="px-6 py-4">
                     <a
                       href="#"
-                      class="font-medium text-[#75E6DA] hover:underline"
+                      className="font-medium text-[#75E6DA] hover:underline"
                     >
                       Pending
                     </a>
@@ -177,13 +178,13 @@ function Dashboard() {
                   >
                     Arun
                   </th>
-                  <td class="px-6 py-4">Kannur</td>
-                  <td class="px-6 py-4">General</td>
-                  <td class="px-6 py-4">SIMS</td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">Kannur</td>
+                  <td className="px-6 py-4">General</td>
+                  <td className="px-6 py-4">SIMS</td>
+                  <td className="px-6 py-4">
                     <a
                       href="#"
-                      class="font-medium text-[#75E6DA] hover:underline"
+                      className="font-medium text-[#75E6DA] hover:underline"
                     >
                       Pending
                     </a>
@@ -197,13 +198,13 @@ function Dashboard() {
                   >
                     Arun
                   </th>
-                  <td class="px-6 py-4">Kannur</td>
-                  <td class="px-6 py-4">General</td>
-                  <td class="px-6 py-4">SIMS</td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">Kannur</td>
+                  <td className="px-6 py-4">General</td>
+                  <td className="px-6 py-4">SIMS</td>
+                  <td className="px-6 py-4">
                     <a
                       href="#"
-                      class="font-medium text-[#75E6DA] hover:underline"
+                      className="font-medium text-[#75E6DA] hover:underline"
                     >
                       Pending
                     </a>
@@ -217,13 +218,13 @@ function Dashboard() {
                   >
                     Arun
                   </th>
-                  <td class="px-6 py-4">Kannur</td>
-                  <td class="px-6 py-4">General</td>
-                  <td class="px-6 py-4">SIMS</td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">Kannur</td>
+                  <td className="px-6 py-4">General</td>
+                  <td className="px-6 py-4">SIMS</td>
+                  <td className="px-6 py-4">
                     <a
                       href="#"
-                      class="font-medium text-[#75E6DA] hover:underline"
+                      className="font-medium text-[#75E6DA] hover:underline"
                     >
                       Pending
                     </a>
@@ -238,13 +239,13 @@ function Dashboard() {
                   >
                     Arun
                   </th>
-                  <td class="px-6 py-4">Kannur</td>
-                  <td class="px-6 py-4">General</td>
-                  <td class="px-6 py-4">SIMS</td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">Kannur</td>
+                  <td className="px-6 py-4">General</td>
+                  <td className="px-6 py-4">SIMS</td>
+                  <td className="px-6 py-4">
                     <a
                       href="#"
-                      class="font-medium text-[#75E6DA] hover:underline"
+                      className="font-medium text-[#75E6DA] hover:underline"
                     >
                       Pending
                     </a>
@@ -258,13 +259,13 @@ function Dashboard() {
                   >
                     Arun
                   </th>
-                  <td class="px-6 py-4">Kannur</td>
-                  <td class="px-6 py-4">General</td>
-                  <td class="px-6 py-4">SIMS</td>
-                  <td class="px-6 py-4">
+                  <td className="px-6 py-4">Kannur</td>
+                  <td className="px-6 py-4">General</td>
+                  <td className="px-6 py-4">SIMS</td>
+                  <td className="px-6 py-4">
                     <a
                       href="#"
-                      class="font-medium text-[#75E6DA] hover:underline"
+                      className="font-medium text-[#75E6DA] hover:underline"
                     >
                       Pending
                     </a>
@@ -275,7 +276,7 @@ function Dashboard() {
             </table>
           </div>
 
-          <div class="flex justify-center rounded  dark:bg-gray-800">
+          <div className="flex justify-center rounded  dark:bg-gray-800">
             <div className="p-16 w-50 ">
               <Pie
                 data={data}

@@ -3,7 +3,6 @@ import jwtDecode from "jwt-decode";
 
 export const checkIfDocLoggedIn = () => {
     const token = localStorage.getItem('doc');
-    console.log(token);
     if (!token) return false;
     const decodedToken = jwtDecode(token);
 

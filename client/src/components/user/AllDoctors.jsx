@@ -30,8 +30,8 @@ function AllDocotors(props) {
         </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 place-items-center 2xl:grid-cols-4 py-24 ">
 
-          {props.results.map((d) => (
-              <div className="w-full p-4 lg:w-72 2xl:w-80 rounded-lg shadow-xl mt-20 scale-100 hover:scale-105 ease-in duration-200 bg-white" onClick={()=>navigate(`/doctorDetails/${d._id}`)}>
+          {props.results.map((d, index) => (
+              <div className="w-full p-4 lg:w-72 2xl:w-80 rounded-lg shadow-xl mt-20 scale-100 hover:scale-105 ease-in duration-200 bg-white" onClick={()=>navigate(`/doctorDetails/${d._id}`)} key={index}>
                 <div className="wrapper antialiased -mt-16">
                   <img
                     src={d.imageUrl}
@@ -52,10 +52,10 @@ function AllDocotors(props) {
                 <div className=" sm:mt-0 flex flex-col sm:flex-row sm:justify-between sm:items-center">
                   <div>
                     <p className="mt-3 hidden sm:block text-[#4f4c4a]">Rating</p>
-                    <div class="flex items-center ">
+                    <div className="flex items-center ">
                       <svg
                         aria-hidden="true"
-                        class="w-5 h-5 text-yellow-400"
+                        className="w-5 h-5 text-yellow-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ function AllDocotors(props) {
                       </svg>
                       <svg
                         aria-hidden="true"
-                        class="w-5 h-5 text-yellow-400"
+                        className="w-5 h-5 text-yellow-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -75,7 +75,7 @@ function AllDocotors(props) {
                       </svg>
                       <svg
                         aria-hidden="true"
-                        class="w-5 h-5 text-yellow-400"
+                        className="w-5 h-5 text-yellow-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +85,7 @@ function AllDocotors(props) {
                       </svg>
                       <svg
                         aria-hidden="true"
-                        class="w-5 h-5 text-yellow-400"
+                        className="w-5 h-5 text-yellow-400"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ function AllDocotors(props) {
                       </svg>
                       <svg
                         aria-hidden="true"
-                        class="w-5 h-5 text-gray-300 dark:text-gray-500"
+                        className="w-5 h-5 text-gray-300 dark:text-gray-500"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"

@@ -41,8 +41,6 @@ function AppointmentsList() {
     setFiltered(result);
   }, [search])
 
-  console.log('hjgjh', appointments);
-
   return (
     <div className="p-4 sm:ml-64 bg-[#05445E] h-screen">
       <div className=" border-gray-200  rounded-lg dark:border-gray-700 mt-14">
