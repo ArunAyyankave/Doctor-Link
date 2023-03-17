@@ -1,10 +1,12 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { userLogout } from '../../redux/features/userSlice';
+import Search from './Search';
 
-function UserNavbar() {
+function UserNavbar(props) {
 
+  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -16,6 +18,7 @@ function UserNavbar() {
           <div className=''>
             <span className='text-bold text-xl sm:text-3xl italic font-semibold self-center cursor-pointer select-none'><Link to="/" className='link'>Doctor Link</Link></span>
           </div>
+          {location.pathname === '/' && <Search onSearchData={props.onSearchData}/>}
           <div className='items-center'>
             <a className='text-xs sm:text-lg cursor-pointer hover:text-blue-500 duration-500'>
               <Link to="/appointments" className='link'>Appointments</Link>
@@ -33,8 +36,6 @@ function UserNavbar() {
                 Sign In
               </button>
             )}
-
-
           </div>
         </div>
       </nav>

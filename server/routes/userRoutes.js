@@ -14,5 +14,6 @@ router.post('/docSignup',docController.docSignup)
 
 router.get('/getDoctors',docController.getDoctors)
 router.get('/doctor/:_id',docController.getDoctor)
+router.get('/search',docController.searchDoctor)
 
 module.exports = router;

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { useNavigate } from 'react-router-dom'
 
 
-function AllDocotors() {
+function AllDocotors(props) {
 
   const [doc, setDocs] = useState([])
 
@@ -16,9 +16,9 @@ function AllDocotors() {
   useEffect(() => {
     axios.get('/getDoctors').then(({ data }) => {
       setDocs(data.docDatas);
+      props.onSearchData(data.docDatas);
     });
-  }, []);
-
+  }, [])
 
   return (
     <div className="bg-gradient-to-r from-blue-50 to-blue-100">
@@ -30,7 +30,7 @@ function AllDocotors() {
         </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 place-items-center 2xl:grid-cols-4 py-24 ">
 
-          {doc.map((d) => (
+          {props.results.map((d) => (
               <div className="w-full p-4 lg:w-72 2xl:w-80 rounded-lg shadow-xl mt-20 scale-100 hover:scale-105 ease-in duration-200 bg-white" onClick={()=>navigate(`/doctorDetails/${d._id}`)}>
                 <div className="wrapper antialiased -mt-16">
                   <img
