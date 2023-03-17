@@ -6,5 +6,7 @@ const verifyToken = require('../middlewares/managerAuth')
 
 router.post('/signin', doctorController.signin);
 router.post('/completeprofile',verifyToken,docProfile.completeprofile)
+router.post('/addSlot',verifyToken,docProfile.addSlot)
+router.get('/getSlots',verifyToken,docProfile.getSlots)
 
 module.exports = router;

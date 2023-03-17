@@ -11,5 +11,38 @@ module.exports = {
         } catch (error) {
             console.log(error.message)
         }
+    },
+
+    addSlot: async (req, res) => {
+        try {
+            const _id = req._id;
+            const { start, end, isAvailable = true } = req.body;
+
+            const doctor = await doc.findById({ _id });
+            doctor.timeSlots.push({
+                start,
+                end,
+                isAvailable,
+            });
+
+            await doctor.save();
+
+            res.status(201).send('Time slot added successfully');
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getSlots: async (req, res) => {
+        try {
+            const _id = req._id;
+            const doctor = await doc.findById(_id);
+
+            const timeSlots = doctor.timeSlots;
+            console.log(timeSlots);
+            return res.json({ timeSlots: timeSlots });
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
