@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const userController = require('../controllers/userController/userSignin&Signup');
 const docController = require('../controllers/userController/docController')
+const appointmentController = require('../controllers/userController/appointmentController')
+const auth = require('../middlewares/userAuth')
+
 
 router.post('/signup',userController.userSignup)
 router.post('/signin',userController.userSignin)
@@ -15,5 +18,7 @@ router.post('/docSignup',docController.docSignup)
 router.get('/getDoctors',docController.getDoctors)
 router.get('/doctor/:_id',docController.getDoctor)
 router.get('/search',docController.searchDoctor)
+
+router.post('/book-appointment',auth,appointmentController.bookAppointment)
 
 module.exports = router;
