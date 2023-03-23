@@ -1,5 +1,6 @@
 const Doctor = require('../../models/doctorModel');
 const Appointment = require('../../models/appointmentModel');
+const mongoose = require('mongoose')
 
 module.exports = {
     bookAppointment: async (req, res) => {
@@ -31,6 +32,67 @@ module.exports = {
         } catch (error) {
             console.error(error);
             return res.status(500).json({ message: 'Server error' });
+        }
+    },
+
+    getAps: async (req, res) => {
+        try {
+            const userId = req.user;
+            const appointments = await Appointment.aggregate([
+                {
+                    $match: {
+                        userId: mongoose.Types.ObjectId(userId),
+                    },
+                },
+                {
+                    $lookup: {
+                        from: 'doctors',
+                        localField: 'doctorId',
+                        foreignField: '_id',
+                        as: 'doctor',
+                    },
+                },
+                {
+                    $unwind: '$doctor',
+                },
+                {
+                    $addFields: {
+                        timeSlot: {
+                            $filter: {
+                                input: '$doctor.timeSlots',
+                                as: 'timeSlot',
+                                cond: {
+                                    $eq: ['$$timeSlot._id', '$timeSlotId'],
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    $project: {
+                        _id: 1,
+                        appointmentDate: 1,
+                        'doctor._id': 1,
+                        'doctor.name': 1,
+                        'doctor.mobile': 1,
+                        'doctor.email': 1,
+                        'doctor.specialisation': 1,
+                        'doctor.place': 1,
+                        'doctor.fees': 1,
+                        'doctor.imageUrl': 1,
+                        'timeSlot.start': { $first: '$timeSlot.start' },
+                        'timeSlot.end': { $first: '$timeSlot.end' },
+                    },
+                },
+            ]);
+
+            if (!appointments) {
+                return res.status(404).json({ msg: 'Appointment not found' });
+            }
+            res.json(appointments);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send('Server Error');
         }
     }
 }

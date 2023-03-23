@@ -10,8 +10,15 @@ function UserManage() {
 
   const [users, setUsers] = useState([]);
 
+  const token = localStorage.getItem('admin')
   useEffect(() => {
-    axios.get(GET_USERS).then(({ data }) => {
+    axios.get(GET_USERS, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token
+      },
+      withCredentials: true,
+    }).then(({ data }) => {
       setUsers(data.userDatas)
     })
   }, [])
@@ -27,7 +34,13 @@ function UserManage() {
       .then((confirm) => {
         if (confirm) {
           // Perform block action
-          axios.put(CHANGE_BLOCK + `/${id}`).then(response => {
+          axios.put(CHANGE_BLOCK + `/${id}`, {}, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: token
+            },
+            withCredentials: true,
+          }).then(response => {
             setUsers(users.map(user => (user._id === id ? { ...user, blockStatus: !user.blockStatus } : user)))
             toast.success(`User ${status ? "unblocked" : "blocked"} successfully!`);
           })

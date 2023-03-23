@@ -1,16 +1,20 @@
 const router = require('express').Router();
 const adminController = require('../controllers/adminController/adminLogin');
-const userController = require('../controllers/adminController/userController')
-const docController = require('../controllers/adminController/docController')
+const userController = require('../controllers/adminController/userController');
+const docController = require('../controllers/adminController/docController');
+const apsContorller = require('../controllers/adminController/appointmentController');
+const verifyToken = require('../middlewares/adminAuth');
 
 router.post('/signin', adminController.adminLogin);
 
-router.get('/users',userController.getUsers);
-router.put('/users/blockStatus/:_id',userController.blockUser)
+router.get('/users', verifyToken, userController.getUsers);
+router.put('/users/blockStatus/:_id', verifyToken, userController.blockUser);
 
-router.get('/docs',docController.getDocs)
-router.put('/doc/blockStatus/:_id',docController.blockDoc)
-router.put('/doc/approve/:_id',docController.approve);
-router.delete('/doc/:_id',docController.deleteDoc)
+router.get('/docs', verifyToken, docController.getDocs);
+router.put('/doc/blockStatus/:_id', verifyToken, docController.blockDoc);
+router.put('/doc/approve/:_id', verifyToken, docController.approve);
+router.delete('/doc/:_id', verifyToken, docController.deleteDoc);
+
+router.get('/getAps', verifyToken, apsContorller.getAps);
 
 module.exports = router;

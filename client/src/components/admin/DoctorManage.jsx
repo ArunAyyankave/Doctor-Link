@@ -15,8 +15,15 @@ function DoctorManage() {
   const [isOpen, setIsOpen] = useState(false);
   const [filteredData, setFilteredData] = useState([])
 
+  const token = localStorage.getItem('admin')
   useEffect(() => {
-    axios.get(GET_DCS).then(({ data }) => {
+    axios.get(GET_DCS, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token
+      },
+      withCredentials: true,
+    }).then(({ data }) => {
       setDocs(data.docsDatas);
     });
   }, []);
@@ -31,7 +38,13 @@ function DoctorManage() {
       dangerMode: status ? false : true,
     }).then((confirm) => {
       if (confirm) {
-        axios.put(CHANGE_BLOCK + `/${id}`).then((response) => {
+        axios.put(CHANGE_BLOCK + `/${id}`, {}, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: token
+          },
+          withCredentials: true,
+        }).then((response) => {
           setDocs(
             docs.map((doc) =>
               doc._id === id ? { ...doc, blockStatus: !doc.blockStatus } : doc
@@ -57,10 +70,22 @@ function DoctorManage() {
 
   const handleApprove = (id, status) => {
     if (status === 'approve') {
-      axios.put('/admin/doc/approve/' + id);
+      axios.put('/admin/doc/approve/' + id, {}, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token
+        },
+        withCredentials: true,
+      });
       setDocs(docs.map(doc => doc._id === id ? { ...doc, approved: true } : doc));
     } else {
-      axios.delete('/admin/doc/' + id);
+      axios.delete('/admin/doc/' + id, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token
+        },
+        withCredentials: true,
+      });
       setDocs(docs.filter(doc => doc._id !== id));
     }
   }
@@ -107,8 +132,8 @@ function DoctorManage() {
                   <button
                     key={item}
                     className={`${item === selectedItem
-                        ? "bg-gray-100 text-gray-900"
-                        : "text-gray-700"
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-700"
                       } group flex rounded-md items-center w-full px-2 py-2 text-sm`}
                     onClick={() => {
                       setSelectedItem(item);

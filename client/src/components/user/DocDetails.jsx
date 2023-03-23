@@ -12,7 +12,7 @@ function SingleVenuejsx() {
   useEffect(()=>{
     const getDoc = async () => {
       try {
-        let { data } = await axios.get(`/doctor/${id}`);
+        const { data } = await axios.get(`/doctorDetails/${id}`);
         setDoc(data);
       } catch (error) {
         console.log(error.message);

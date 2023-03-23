@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import axios from '../../api/axios';
+import axios from '../../../api/axios';
 import DataTable from 'react-data-table-component';
 
-function AppointmentList() {
+function DocBookings() {
 
     const [appointments, setAppointments] = useState([]);
     const [search, setSearch] = useState("");
     const [filtered, setFiltered] = useState("");
 
     const getAppointments = async () => {
-        const token = localStorage.getItem('admin')
+        const token = localStorage.getItem('doc')
         try {
-            const { data } = await axios.get('/admin/getAps', {
+            const { data } = await axios.get('/doctor/getAps', {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: token
@@ -27,17 +27,12 @@ function AppointmentList() {
 
     const columns = [
         {
-            name: "Doctor",
-            selector: (row) => row.doctor.name,
-            sortable: true,
-        },
-        {
-            name: "Patient",
+            name: "Name",
             selector: (row) => row.user.name,
             sortable: true,
         },
         {
-            name: "Mobile",
+            name: "mobile",
             selector: (row) => row.user.mobile,
         },
         {
@@ -60,7 +55,7 @@ function AppointmentList() {
 
     useEffect(() => {
         const result = appointments.filter((appointment) => {
-            return appointment.doctor.name.toLowerCase().match(search.toLowerCase());
+            return appointment.user.name.toLowerCase().match(search.toLowerCase());
         });
         setFiltered(result);
     }, [search])
@@ -89,4 +84,4 @@ function AppointmentList() {
     )
 }
 
-export default AppointmentList
+export default DocBookings

@@ -30,7 +30,7 @@ function DocProfileEdit() {
       const { data } = await axios.post('https://api.cloudinary.com/v1_1/desr7slhc/image/upload', formData);
       const imageUrl = data.secure_url
 
-      let token = localStorage.getItem('doc')
+      const token = localStorage.getItem('doc')
       const response = await axios.post(
         `/doctor/completeprofile`,
         JSON.stringify({ name, mobile, email, spec, qual, exp, fees, place, imageUrl }),

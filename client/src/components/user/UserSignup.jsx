@@ -50,10 +50,10 @@ function UserSignup() {
   const [otpMatch, setOtpMatch] = useState("");
 
   useEffect(() => {
-    let token = localStorage.getItem('user')
+    const token = localStorage.getItem('user')
 
     if (token) {
-      let user = jwtDecode(token)
+      const user = jwtDecode(token)
 
     }
     userRef.current.focus();
