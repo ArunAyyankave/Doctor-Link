@@ -38,6 +38,10 @@ module.exports = {
     getAps: async (req, res) => {
         try {
             const userId = req.user;
+            const { page = 1, pageSize = 10 } = req.query;
+            const skip = (page - 1) * pageSize;
+            console.log(req.query);
+
             const appointments = await Appointment.aggregate([
                 {
                     $match: {
@@ -46,23 +50,23 @@ module.exports = {
                 },
                 {
                     $lookup: {
-                        from: 'doctors',
-                        localField: 'doctorId',
-                        foreignField: '_id',
-                        as: 'doctor',
+                        from: "doctors",
+                        localField: "doctorId",
+                        foreignField: "_id",
+                        as: "doctor",
                     },
                 },
                 {
-                    $unwind: '$doctor',
+                    $unwind: "$doctor",
                 },
                 {
                     $addFields: {
                         timeSlot: {
                             $filter: {
-                                input: '$doctor.timeSlots',
-                                as: 'timeSlot',
+                                input: "$doctor.timeSlots",
+                                as: "timeSlot",
                                 cond: {
-                                    $eq: ['$$timeSlot._id', '$timeSlotId'],
+                                    $eq: ["$$timeSlot._id", "$timeSlotId"],
                                 },
                             },
                         },
@@ -72,27 +76,46 @@ module.exports = {
                     $project: {
                         _id: 1,
                         appointmentDate: 1,
-                        'doctor._id': 1,
-                        'doctor.name': 1,
-                        'doctor.mobile': 1,
-                        'doctor.email': 1,
-                        'doctor.specialisation': 1,
-                        'doctor.place': 1,
-                        'doctor.fees': 1,
-                        'doctor.imageUrl': 1,
-                        'timeSlot.start': { $first: '$timeSlot.start' },
-                        'timeSlot.end': { $first: '$timeSlot.end' },
+                        "doctor._id": 1,
+                        "doctor.name": 1,
+                        "doctor.mobile": 1,
+                        "doctor.email": 1,
+                        "doctor.specialisation": 1,
+                        "doctor.place": 1,
+                        "doctor.fees": 1,
+                        "doctor.imageUrl": 1,
+                        "timeSlot.start": { $first: "$timeSlot.start" },
+                        "timeSlot.end": { $first: "$timeSlot.end" },
+                    },
+                },
+                { $skip: skip },
+                { $limit: pageSize },
+            ]);
+
+            const totalCount = await Appointment.aggregate([
+                {
+                    $match: {
+                        userId: mongoose.Types.ObjectId(userId),
+                    },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        count: { $sum: 1 },
                     },
                 },
             ]);
 
-            if (!appointments) {
-                return res.status(404).json({ msg: 'Appointment not found' });
+            const totalPages = Math.ceil(totalCount[0].count / pageSize);
+
+            if (!appointments.length) {
+                return res.status(404).json({ msg: "Appointment not found" });
             }
-            res.json(appointments);
+            res.json({ appointments, totalPages });
         } catch (error) {
             console.error(error.message);
-            res.status(500).send('Server Error');
+            res.status(500).send("Server Error");
         }
     }
+
 }

@@ -38,8 +38,46 @@ module.exports = {
                                 },
                             },
                         },
-                        timeSlotStart: { $arrayElemAt: ["$doctor.timeSlots.start", 0] },
-                        timeSlotEnd: { $arrayElemAt: ["$doctor.timeSlots.end", 0] },
+                        timeSlotStart: {
+                            $arrayElemAt: [
+                                {
+                                    $map: {
+                                        input: {
+                                            $filter: {
+                                                input: "$doctor.timeSlots",
+                                                as: "timeSlot",
+                                                cond: {
+                                                    $eq: ["$$timeSlot._id", "$timeSlotId"],
+                                                },
+                                            },
+                                        },
+                                        as: "timeSlot",
+                                        in: "$$timeSlot.start",
+                                    },
+                                },
+                                0,
+                            ],
+                        },
+                        timeSlotEnd: {
+                            $arrayElemAt: [
+                                {
+                                    $map: {
+                                        input: {
+                                            $filter: {
+                                                input: "$doctor.timeSlots",
+                                                as: "timeSlot",
+                                                cond: {
+                                                    $eq: ["$$timeSlot._id", "$timeSlotId"],
+                                                },
+                                            },
+                                        },
+                                        as: "timeSlot",
+                                        in: "$$timeSlot.end",
+                                    },
+                                },
+                                0,
+                            ],
+                        },
                     },
                 },
                 {
@@ -49,11 +87,12 @@ module.exports = {
                         timeSlotStart: 1,
                         timeSlotEnd: 1,
                         "user.name": 1,
-                        "user.mobile": 1,
+                        "doctor.mobile": 1,
                         "doctor.name": 1,
                     },
                 },
             ]);
+
 
             res.json(appointments);
         } catch (error) {

@@ -8,51 +8,87 @@ const AddTimeSlotForm = ({ doctorId }) => {
   const [startTime, setStartTime] = useState('');
   const [endTime, setEndTime] = useState('');
   const [isAvailable, setIsAvailable] = useState(true);
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let errors = {};
+    let formIsValid = true;
+
+    if (!startTime) {
+      formIsValid = false;
+      errors['startTime'] = 'Start time is required';
+    }
+
+    if (!endTime) {
+      formIsValid = false;
+      errors['endTime'] = 'End time is required';
+    }
+
+    const currentTime = new Date().getTime();
+    const startTimeMillis = new Date(startTime).getTime();
+    const minStartTimeMillis = currentTime + 5 * 60 * 1000; // 5 minutes in milliseconds
+
+    if (startTimeMillis < minStartTimeMillis) {
+      formIsValid = false;
+      errors['startTime'] = 'Start time should be at least 5 minutes greater than the current time';
+    }
+
+    if (startTime && endTime && startTime >= endTime) {
+      formIsValid = false;
+      errors['endTime'] = 'End time should be after start time';
+    }
+
+    setErrors(errors);
+    return formIsValid;
+  }
 
   const token = localStorage.getItem('doc')
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    Swal({
-      title: 'Are you sure?',
-      text: 'Do you want to add this time slot?',
-      icon: 'warning',
-      buttons: ['Cancel', 'Yes'],
-      dangerMode: true,
-    }).then(async (confirm) => {
-      if (confirm) {
+    if (validateForm()) {
+      Swal({
+        title: 'Are you sure?',
+        text: 'Do you want to add this time slot?',
+        icon: 'warning',
+        buttons: ['Cancel', 'Yes'],
+        dangerMode: true,
+      }).then(async (confirm) => {
+        if (confirm) {
 
-        try {
-          const response = await axios.post(`/doctor/addSlot`, {
-            start: startTime,
-            end: endTime,
-            isAvailable,
-          }, {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: token
-            },
-            withCredentials: true,
-          });
+          try {
+            const response = await axios.post(`/doctor/addSlot`, {
+              start: startTime,
+              end: endTime,
+              isAvailable,
+            }, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token
+              },
+              withCredentials: true,
+            });
 
-          toast.success('Time slot added successfully!', {
-            position: 'bottom-center',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-          });
+            toast.success('Time slot added successfully!', {
+              position: 'bottom-center',
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+            });
 
-          console.log(response.data);
-          //can handle the success response here, such as showing a success message or redirecting the user to a different page.
-        } catch (error) {
-          console.error(error);
-          //can handle the error response here, such as showing an error message to the user.
+            console.log(response.data);
+            //can handle the success response here, such as showing a success message or redirecting the user to a different page.
+          } catch (error) {
+            console.error(error);
+            //can handle the error response here, such as showing an error message to the user.
+          }
         }
-      }
-    });
+      });
+    }
   };
+  const minTime = new Date().toISOString().slice(0, 16);
 
   return (
     <div className="p-4 sm:ml-64">
@@ -69,8 +105,10 @@ const AddTimeSlotForm = ({ doctorId }) => {
                 id="start-time"
                 className="border-4 h-9 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 value={startTime}
+                min={minTime}
                 onChange={(e) => setStartTime(e.target.value)}
               />
+              {errors.startTime && <span className="text-red-500">{errors.startTime}</span>}
             </div>
             <div>
               <label htmlFor="end-time" className="block text-sm font-medium text-gray-700">
@@ -81,8 +119,10 @@ const AddTimeSlotForm = ({ doctorId }) => {
                 id="end-time"
                 className=" border-4 h-9 mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 value={endTime}
+                min={minTime}
                 onChange={(e) => setEndTime(e.target.value)}
               />
+              {errors.endTime && <span className="text-red-500">{errors.endTime}</span>}
             </div>
           </div>
           <div className="mt-4">

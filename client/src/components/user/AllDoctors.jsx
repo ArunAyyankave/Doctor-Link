@@ -30,7 +30,7 @@ function AllDocotors(props) {
         </div>
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 place-items-center 2xl:grid-cols-4 py-24 ">
 
-          {props.results.map((d, index) => (
+          {props.results.length ? props.results.map((d, index) => (
               <div className="w-full p-4 lg:w-72 2xl:w-80 rounded-lg shadow-xl mt-20 scale-100 hover:scale-105 ease-in duration-200 bg-white" onClick={()=>navigate(`/doctorDetails/${d._id}`)} key={index}>
                 <div className="wrapper antialiased -mt-16">
                   <img
@@ -114,7 +114,7 @@ function AllDocotors(props) {
                 </div>
 
               </div>
-          ))}
+          )) : <h1>No doctors available...</h1>}
 
         </div>
       </div>

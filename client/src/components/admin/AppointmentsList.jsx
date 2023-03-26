@@ -32,17 +32,24 @@ function AppointmentList() {
             sortable: true,
         },
         {
+            name: "Mobile (doctor)",
+            selector: (row) => row.doctor.mobile,
+            sortable: true,
+        },
+        {
             name: "Patient",
             selector: (row) => row.user.name,
             sortable: true,
         },
         {
-            name: "Mobile",
-            selector: (row) => row.user.mobile,
-        },
-        {
             name: "Date",
             selector: (row) => new Date(row.timeSlotStart).toLocaleDateString([], { month: 'short', day: '2-digit' }),
+            sortable: true,
+            sortFunction: (a, b) => {
+                const dateA = new Date(a.timeSlotStart);
+                const dateB = new Date(b.timeSlotStart);
+                return dateA.getTime() - dateB.getTime();
+            },
         },
         {
             name: "Time Slot",
@@ -50,6 +57,12 @@ function AppointmentList() {
                 const timeSlotStart = new Date(row.timeSlotStart).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
                 const timeSlotEnd = new Date(row.timeSlotEnd).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
                 return `${timeSlotStart} - ${timeSlotEnd}`;
+            },
+            sortable: true,
+            sortFunction: (a, b) => {
+                const timeSlotStartA = new Date(a.timeSlotStart);
+                const timeSlotStartB = new Date(b.timeSlotStart);
+                return timeSlotStartA.getTime() - timeSlotStartB.getTime();
             },
         },
     ];
