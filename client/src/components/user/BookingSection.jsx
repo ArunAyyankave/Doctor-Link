@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from "../../api/axios";
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -11,6 +11,8 @@ function BookingSection() {
 
   const [doc, setDoc] = useState({});
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getDoc = async () => {
@@ -24,8 +26,9 @@ function BookingSection() {
     getDoc();
   }, []);
 
+  const currentTime = new Date(); // Get the current time
   const availableTimeSlots = doc?.timeSlots?.filter(
-    (slot) => slot.isAvailable
+    (slot) => slot.isAvailable && new Date(slot.start) > currentTime
   );
 
   const token = localStorage.getItem('user');
@@ -78,7 +81,8 @@ function BookingSection() {
                 <a className='text-2xl font-roboto font-semibold p-2 mx-2 text-[#504a4a] '>Book an Appoinment</a>
               </div>
               <div className='flex px-4 py-5  space-x-9 '>
-                {availableTimeSlots && availableTimeSlots.map(slot => (
+
+                {availableTimeSlots && availableTimeSlots.length ? availableTimeSlots.map(slot => (
                   <div className='border rounded-md' key={slot._id}>
                     <div className='p-2'>
                       <h1 className='font-semibold text-xl text-[#504a4ad0] '>{new Date(slot.start).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}-{new Date(slot.end).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}</h1>
@@ -92,7 +96,7 @@ function BookingSection() {
                         <div className='pl-3'>
                           <button
                             className='bg-green-400 text-white px-2 rounded hover:bg-green-600'
-                            onClick={() => handleBookAppointment(slot._id)}
+                            onClick={token ? () => handleBookAppointment(slot._id) : () => navigate('/signin')}
                           >
                             BOOK
                           </button>
@@ -100,7 +104,8 @@ function BookingSection() {
                       </div>
                     </div>
                   </div>
-                ))}
+                )) : <div>No slots availabe to book.</div>}
+
               </div>
             </div>
           </div>

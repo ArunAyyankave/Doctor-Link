@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import UserRoutes from "./routes/UserRoutes";
 import DoctorRoutes from "./routes/DoctorRoutes";
-import AdminRoutes from "./routes/AdminRoutes"
+import AdminRoutes from "./routes/AdminRoutes";
 
 function App() {
   return (
