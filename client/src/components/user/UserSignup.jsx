@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
 import Google from "../../assets/Google.png";
 import Signup from "../../assets/Signup.png";
 import { Info, Check, Cross } from "./assets/Iconos";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import axios from "../../api/axios";
 import setUpRecaptcha from "../../context/UserAuth";
 import jwtDecode from "jwt-decode";
 
 const USER_REGEX = /^[a-zA-z][a-zA-Z0-9-_ ]{3,23}$/;
 const MOBILE_REGEX = /^[0-9]{10}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$/;
 const VALID_OTP = /^[0-9]{6}$/;
 
 const SIGNUP_URL = "/signup";
@@ -50,30 +50,26 @@ function UserSignup() {
   const [otpMatch, setOtpMatch] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem('user')
+    const token = localStorage.getItem('user');
 
     if (token) {
-      const user = jwtDecode(token)
-
+      const user = jwtDecode(token);
     }
     userRef.current.focus();
   }, []);
 
   useEffect(() => {
     const result = USER_REGEX.test(user);
-
     setValidName(result);
   }, [user]);
 
   useEffect(() => {
     const result = MOBILE_REGEX.test(mobile);
-
     setValidMobile(result);
   }, [mobile]);
 
   useEffect(() => {
     const result = PWD_REGEX.test(pwd);
-
     setValidPwd(result);
     const match = pwd === matchPwd;
     setValidMatchPwd(match);
@@ -90,12 +86,11 @@ function UserSignup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    //if button enabled with JS hack or other some reason
     const v1 = USER_REGEX.test(user);
     const v2 = MOBILE_REGEX.test(mobile);
     const v3 = PWD_REGEX.test(pwd);
     if (!v1 || !v2 || !v3) {
-      setErrMsg("invalid entry");
+      setErrMsg("Invalid entry");
       return;
     }
     try {
@@ -107,7 +102,6 @@ function UserSignup() {
       setConfirm(otpResponse);
       setSuccess(true);
     } catch (error) {
-
       if (error.code === "auth/argument-error") {
         setErrMsg("Mobile Number you entered isn't available")
       } else if (error.response?.status === 409) {
@@ -118,7 +112,6 @@ function UserSignup() {
       errRef.current.focus();
     }
   };
-
 
   const handleOTP = async (e) => {
     e.preventDefault();
@@ -142,7 +135,6 @@ function UserSignup() {
         navigatee("/Signin");
       });
     } catch (error) {
-
       setOtpMatch(error.message);
       if (!error?.response) {
         setErrMsg("no server response");
@@ -245,7 +237,7 @@ function UserSignup() {
                             id="signupName"
                             autoComplete="off"
                             className="border my-3 border-gray-300 text-gray-900 text-md rounded-md  w-full p-3 ring-blue-300 ring-offset-1 focus:ring dark:text-white dark:focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            placeholder="Name"
+                            placeholder="Your full name"
                             required
                             value={user}
                             ref={userRef}
@@ -283,7 +275,7 @@ function UserSignup() {
                             type="number"
                             id="signupMobile"
                             className="border my-3 border-gray-300 text-gray-900 text-md rounded-md  w-full p-3 ring-blue-300 ring-offset-1 focus:ring dark:text-white dark:focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            placeholder="Mobile"
+                            placeholder="Mobile number"
                             autoComplete="off"
                             maxLength={10}
                             required
@@ -319,7 +311,7 @@ function UserSignup() {
                             type="password"
                             id="pwd"
                             className="border my-3 border-gray-300 text-gray-900 text-md rounded-md  w-full p-3 ring-blue-300 ring-offset-1 focus:ring dark:text-white dark:focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            placeholder="Set Password"
+                            placeholder="Password"
                             required
                             value={pwd}
                             onChange={(e) => setPwd(e.target.value)}
@@ -356,7 +348,7 @@ function UserSignup() {
                             type="password"
                             id="matchPwd"
                             className="border my-3 border-gray-300 text-gray-900 text-md rounded-md  w-full p-3 ring-blue-300 ring-offset-1 focus:ring dark:text-white dark:focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                            placeholder="Retype Password"
+                            placeholder="Confirm password"
                             required
                             value={matchPwd}
                             onChange={(e) => setMatchPwd(e.target.value)}
@@ -395,14 +387,6 @@ function UserSignup() {
                         />
                         <button
                           className="w-full select-none p-3 bg-blue-500 rounded-full text-white text-xl font-roboto mt-5 font-semibold hover:bg-blue-600 disabled:hover:bg-blue-600"
-                          disabled={
-                            !validName ||
-                              !validMobile ||
-                              !validPwd ||
-                              !validMatchPwd
-                              ? true
-                              : false
-                          }
                           type="submit"
                         >
                           Sign up

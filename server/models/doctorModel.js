@@ -13,6 +13,7 @@ const DoctorSchema = new mongoose.Schema({
   image: String,
   imageUrl: String,
   email: String,
+  facility: String,
   specialisation: String,
   qualification: String,
   experience: String,

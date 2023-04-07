@@ -10,10 +10,9 @@ function DoctorDetails() {
       <UserNavbar />
       <DocDetails />
       <BookingSection />
-
       <UserFooter />
     </div>
   )
 }
 
-export default DoctorDetails
+export default DoctorDetails;

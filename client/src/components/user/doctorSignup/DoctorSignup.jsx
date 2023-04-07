@@ -5,12 +5,11 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "../../../api/axios";
 import setUpRecaptcha from "../../../context/UserAuth";
-import jwtDecode from "jwt-decode";
 import PreviewImage from "../PreviewImage";
 
 const NUMBER_REGEX = /^[0-9]{10}$/;
 const OTP_REGEX = /^[0-9]{6}$/;
-const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%*]).{8,24}$/;
 
 const MOBILE_URL = "/docMobile";
 const SIGN_UP = "/docSignup";
@@ -32,13 +31,13 @@ function DoctorSignup() {
     },
     validationSchema: Yup.object({
       name: Yup.string()
-        .min(4, "name must be 4 character or higher")
-        .max(17, "name must be 17 character or lesser")
+        .min(4, "Name must be 4 character or higher")
+        .max(17, "Name must be 17 character or lesser")
         .required("Required"),
       mobile: Yup.string()
         .matches(NUMBER_REGEX, "Phone number is not valid")
         .required("Required"),
-      image: Yup.mixed().required("document is required").test("FILE_SIZE", "Too big!", (value) => value && value.size < 1024 * 1024).test("FILE_TYPE", "invalid", (value) => value && ['image/png', 'image/jpeg'].includes(value.type)),
+      image: Yup.mixed().required("Document is required").test("FILE_SIZE", "Too big!", (value) => value && value.size < 1024 * 1024).test("FILE_TYPE", "invalid", (value) => value && ['image/png', 'image/jpeg'].includes(value.type)),
       password: Yup.string()
         .matches(
           PWD_REGEX,
@@ -63,9 +62,7 @@ function DoctorSignup() {
             withCredentials: true,
           }
         );
-        console.log("+91" + values.mobile);
         const otpResponse = await setUpRecaptcha("+91" + values.mobile);
-        console.log(otpResponse);
         setConfirm(otpResponse);
         setSuccess(true);
         setErr("");
@@ -75,7 +72,7 @@ function DoctorSignup() {
         if (error.code === "auth/argument-error") {
           setErr("Mobile Number you entered isn't available");
         } else if (error.response?.status === 409) {
-          setErr("mobile already taken");
+          setErr("Mobile already taken");
         } else {
           setErr("complete captcha");
         }
@@ -98,9 +95,9 @@ function DoctorSignup() {
 
       try {
         formData.append('file', image)
-        formData.append('upload_preset', 'qxxwuvkr');
+        formData.append('upload_preset', import.meta.env.VITE_uploadPreset);
 
-        const { data } = await axios.post('https://api.cloudinary.com/v1_1/desr7slhc/image/upload', formData);
+        const { data } = await axios.post(`https://api.cloudinary.com/v1_1/${import.meta.env.VITE_cloudname}/image/upload`, formData);
         formik.values.image = data.secure_url
 
         await confirm.confirm(values.otp).then(async () => {
@@ -112,7 +109,6 @@ function DoctorSignup() {
               withCredentials: true,
             }
           );
-          console.log(response.data);
           // localStorage.setItem("admins", JSON.stringify(response.data));
           navigate("/doctor/signin");
         });
@@ -167,7 +163,7 @@ function DoctorSignup() {
                   <input
                     type="number"
                     className="input_Field"
-                    placeholder="Mobile"
+                    placeholder="Mobile number"
                     name="mobile"
                     onBlur={formik.handleBlur}
                     value={formik.values.mobile}
@@ -199,7 +195,7 @@ function DoctorSignup() {
                   <input
                     type="Password"
                     className="input_Field"
-                    placeholder="Confirm Password"
+                    placeholder="Confirm password"
                     name="confirmPassword"
                     value={formik.values.confirmPassword}
                     onBlur={formik.handleBlur}

@@ -15,24 +15,24 @@ export const checkIfDocLoggedIn = () => {
 
 const initialState = {
     isLoggedIn: checkIfDocLoggedIn(),
-    docDetails:{},
-    status:'',
-    reason:''
+    docDetails: {},
+    status: '',
+    reason: ''
 }
 
 const docSlice = createSlice({
-    name:'doc',
+    name: 'doc',
     initialState,
-    reducers:{
-        setDocDetails:(state,action)=>{
+    reducers: {
+        setDocDetails: (state, action) => {
             state.isLoggedIn = true,
-            state.docDetails = {name:action.payload.name, mobile:action.payload.mobile, document:action.payload.image}
+                state.docDetails = { name: action.payload.name, mobile: action.payload.mobile, document: action.payload.image }
             state.status = action.payload.status
             state.reason = action.payload.reason
         },
-        removeDocDetails:(state,action)=>{
+        removeDocDetails: (state, action) => {
             state.isLoggedIn = false,
-            state.mobile = ''
+                state.mobile = ''
             state.name = ''
             state.status = ''
             localStorage.removeItem('doc')
@@ -40,5 +40,5 @@ const docSlice = createSlice({
     }
 })
 
-export const {setDocDetails, removeDocDetails} = docSlice.actions
-export default docSlice.reducer
+export const { setDocDetails, removeDocDetails } = docSlice.actions;
+export default docSlice.reducer;

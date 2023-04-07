@@ -1,12 +1,12 @@
-import React from 'react'
-import Bookings from '../../components/doctor/docBookings/DocBookings'
+import React from 'react';
+import Bookings from '../../components/doctor/docBookings/DocBookings';
 
 function DOCBookings() {
   return (
     <div>
-        <Bookings />
+      <Bookings />
     </div>
   )
 }
 
-export default DOCBookings
+export default DOCBookings;

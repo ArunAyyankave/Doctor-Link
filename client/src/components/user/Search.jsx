@@ -3,6 +3,7 @@ import axios from '../../api/axios';
 import { FaSearch } from 'react-icons/fa';
 
 function Search(props) {
+
     const [query, setQuery] = useState('');
 
     const handleSearch = async () => {

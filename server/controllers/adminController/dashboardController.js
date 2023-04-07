@@ -16,10 +16,9 @@ module.exports = {
                 appointmentDate: today,
             });
 
-            const docsPending = await docs.find({approved:false})
+            const docsPending = await docs.find({ approved: false });
 
-            console.log( bookingsToday, docsPending);
-            res.json({totalUsers,totalDoctors,totalBookings,bookingsToday,docsPending})
+            res.json({ totalUsers, totalDoctors, totalBookings, bookingsToday, docsPending });
         } catch (error) {
             console.log(error);
         }

@@ -28,4 +28,4 @@ function UserRoutes() {
   )
 }
 
-export default UserRoutes
+export default UserRoutes;

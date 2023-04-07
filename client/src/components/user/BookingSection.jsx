@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from "../../api/axios";
 import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -21,13 +22,13 @@ function BookingSection() {
       }
     }
     getDoc();
-  }, [])
+  }, []);
 
   const availableTimeSlots = doc?.timeSlots?.filter(
     (slot) => slot.isAvailable
   );
 
-  const token = localStorage.getItem('user')
+  const token = localStorage.getItem('user');
   const handleBookAppointment = async (timeSlotId) => {
     try {
       const result = await Swal.fire({
@@ -51,7 +52,6 @@ function BookingSection() {
           },
           withCredentials: true,
         });
-        console.log('Appointment booked:', response.data);
         // TODO: Show success message to user
         toast.success('Appointment booked successfully!', {
           position: 'top-center',
@@ -111,4 +111,4 @@ function BookingSection() {
   )
 }
 
-export default BookingSection
+export default BookingSection;

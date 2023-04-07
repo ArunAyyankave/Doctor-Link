@@ -1,14 +1,15 @@
-import React from "react";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
+import axios from "../../api/axios";
 import useAuth from "../../hooks/useAuth";
 import Google from "../../assets/Google.png";
 import SignImage from "./SignImageSection";
 import { useDispatch, useSelector } from "react-redux";
 import { signinThunk } from "../../redux/thunk/user";
+import { clearError } from '../../redux/features/userSlice';
+import { userLogin } from "../../redux/features/userSlice";
 
-import { auth, provider } from '../../firebase'
-import { signInWithPopup } from "firebase/auth";
+import { googleSignin } from "../../context/UserAuth";
 
 function UserLogin() {
 
@@ -35,7 +36,7 @@ function UserLogin() {
   }, []);
 
   useEffect(() => {
-    setErrMsg("");
+    dispatch(clearError())
   }, [mobile, pwd]);
 
   const handleSigninSubmit = async (e) => {
@@ -43,17 +44,18 @@ function UserLogin() {
     dispatch(signinThunk({ mobile, password: pwd }));
   };
 
-  const [value, setValue] = useState()
-  const handleGoogleSignin = () => {
-    signInWithPopup(auth, provider).then((data) => {
-      setValue(data.user.email)
-      localStorage.setItem("email", data.user.email)
-    })
+  const handleGoogleSignin = async (e) => {
+    e.preventDefault();
+    try {
+      const googleToken = await googleSignin();
+      let { data } = await axios.post('/signin/google', googleToken._tokenResponse)
+      localStorage.setItem('user', data.accessToken);
+      dispatch(userLogin())
+      navigate("/");
+    } catch (error) {
+      setErrMsg(error.message);
+    }
   };
-
-  useEffect(() => {
-    setValue(localStorage.getItem('email'))
-  })
 
   return (
     <>
@@ -82,7 +84,7 @@ function UserLogin() {
                           id="mobile"
                           ref={mobileRef}
                           className="border my-3 border-gray-300 text-gray-900 text-md rounded-md  w-full p-3 ring-blue-300 ring-offset-1 focus:ring dark:text-white dark:focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                          placeholder="Mobile"
+                          placeholder="Mobile number"
                           autoComplete="off"
                           required
                           value={mobile}
@@ -108,7 +110,7 @@ function UserLogin() {
                       </div>
                       <p
                         onClick={() => navigate("/forgotPwd")}
-                        className="font-semibold text-blue-300 font-roboto"
+                        className="font-semibold text-blue-300 font-roboto cursor-pointer"
                       >
                         Forgot password?
                       </p>
@@ -152,7 +154,7 @@ function UserLogin() {
             </div>
           </div>
         </div>
-    </div>
+      </div>
     </>
   );
 }

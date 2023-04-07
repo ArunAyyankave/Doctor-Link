@@ -8,7 +8,7 @@ function DocDashboard() {
   const [aps, setAps] = useState();
 
   useEffect(() => {
-    const token = localStorage.getItem('doc')
+    const token = localStorage.getItem('doc');
     const getSlots = async () => {
       try {
         const { data } = await axios.get('doctor/dashboard', {
@@ -27,26 +27,26 @@ function DocDashboard() {
     }
     getSlots();
   }, [])
-console.log(aps);
+
   return (
     <div className="p-4 sm:ml-64">
       <div className="p-4 border-2 border-gray-200 rounded-lg dark:border-gray-700 mt-14">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
           <div className="flex flex-col p-2 items-center shadow-md justify-center space-y-2 h-auto rounded bg-gradient-to-b from-gray-100 to-gray-300 dark:bg-gray-800">
             <p className="text-sm font-roboto text-gray-500 dark:text-gray-500">TOTAL PATIENTS</p>
-            <p className='text-4xl text-gray-700 font-bold'>{info&&info[0].uniqueUsers}</p>
+            <p className='text-4xl text-gray-700 font-bold'>{info && info[0].uniqueUsers}</p>
           </div>
           <div className="flex flex-col p-2 items-center shadow-md justify-center space-y-2 h-auto rounded bg-gradient-to-b from-gray-100 to-gray-300 dark:bg-gray-800">
             <p className="text-sm font-roboto text-gray-500 dark:text-gray-500">TOTAL APPOINTMENTS</p>
-            <p className='text-4xl text-gray-700 font-bold'>{info&&info[0].totalAppointments}</p>
+            <p className='text-4xl text-gray-700 font-bold'>{info && info[0].totalAppointments}</p>
           </div>
           <div className="flex flex-col p-2 items-center shadow-md justify-center space-y-2 h-auto rounded bg-gradient-to-b from-gray-100 to-gray-300 dark:bg-gray-800">
             <p className="text-sm font-roboto text-gray-500 dark:text-gray-500">APPOINTMENTS BOOKED TODAY</p>
-            <p className='text-4xl text-gray-700 font-bold'>{info&&info[0].todayAppointments}</p>
+            <p className='text-4xl text-gray-700 font-bold'>{info && info[0].todayAppointments}</p>
           </div>
           <div className="flex flex-col p-2 items-center shadow-md justify-center space-y-2 h-auto rounded bg-gradient-to-b from-gray-100 to-gray-300 dark:bg-gray-800">
             <p className="text-sm font-roboto text-gray-500 dark:text-gray-500">REMAINING SLOTS</p>
-            <p className='text-4xl text-gray-700 font-bold'>{slots&&slots.length}</p>
+            <p className='text-4xl text-gray-700 font-bold'>{slots && slots.length}</p>
           </div>
         </div>
         <div className="flex-col sm:flex-row h-auto justify-center md:justify-start mb-4 rounded border bg-gray-50 dark:bg-gray-800">
@@ -92,26 +92,25 @@ console.log(aps);
                 </tr>
               </thead>
               <tbody>
-              {aps && aps.map(ap => (
-                <tr className="border-b border-gray-200 dark:border-gray-700" key={ap._id}>
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
-                    {ap.user.name}
-                  </th>
-                  <td className="px-6 py-4">
-                    {ap.user.mobile}
-                  </td>
-                  <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
-                  {new Date(ap.timeSlotStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                  </td>
-                  <td className="px-6 py-4">
-                  {new Date(ap.timeSlotStart).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}-{new Date(ap.timeSlotEnd).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}
-                  </td>
-                </tr>
+                {aps && aps.map(ap => (
+                  <tr className="border-b border-gray-200 dark:border-gray-700" key={ap._id}>
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">
+                      {ap.user.name}
+                    </th>
+                    <td className="px-6 py-4">
+                      {ap.user.mobile}
+                    </td>
+                    <td className="px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                      {new Date(ap.timeSlotStart).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </td>
+                    <td className="px-6 py-4">
+                      {new Date(ap.timeSlotStart).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}-{new Date(ap.timeSlotEnd).toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' })}
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
           </div>
-
         </div>
       </div>
     </div>

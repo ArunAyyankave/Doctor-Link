@@ -9,7 +9,7 @@ function DocBookings() {
     const [filtered, setFiltered] = useState("");
 
     const getAppointments = async () => {
-        const token = localStorage.getItem('doc')
+        const token = localStorage.getItem('doc');
         try {
             const { data } = await axios.get('/doctor/getAps', {
                 headers: {
@@ -19,8 +19,7 @@ function DocBookings() {
                 withCredentials: true,
             });
             setAppointments(data);
-            setFiltered(data)
-            console.log(data);
+            setFiltered(data);
         } catch (error) {
             console.log(error);
         }
@@ -72,7 +71,7 @@ function DocBookings() {
             return appointment.user.name.toLowerCase().match(search.toLowerCase());
         });
         setFiltered(result);
-    }, [search])
+    }, [search]);
 
     return (
         <div className="p-4 sm:ml-64">
@@ -98,4 +97,4 @@ function DocBookings() {
     )
 }
 
-export default DocBookings
+export default DocBookings;

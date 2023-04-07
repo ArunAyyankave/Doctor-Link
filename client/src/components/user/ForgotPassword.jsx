@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Check, Cross, Info } from "./assets/Iconos";
-import axios from "../../api/axios";
-import SignImage from "./SignImageSection";
 import { useNavigate } from "react-router-dom";
+import axios from "../../api/axios";
+import { Check, Cross, Info } from "./assets/Iconos";
+import SignImage from "./SignImageSection";
 import setUpRecaptcha from "../../context/UserAuth";
 const MOBILE_REGEX = /^[0-9]{10}$/;
 const VALID_OTP = /^[0-9]{6}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const MOBILE_URL = "/forgotPwd/mobileExist";
-const NEW_PASS = "/forgotPwd"
+const NEW_PASS = "/forgotPwd";
 
 function ForgotPassword() {
     const navigate = useNavigate();
@@ -21,19 +21,18 @@ function ForgotPassword() {
     const [newPwdSection, setNewPwdSection] = useState(false);
     const [errMsg, setErrMsg] = useState("");
     const mobileRef = useRef();
-    const [pwd, setPwd] = useState('')
-    const [matchPwd, setMatchPwd] = useState('')
-    const [pwdFocus, setPwdFocus] = useState(false)
-    const [validPwd, setValidPwd] = useState(false)
-    const [validMatchPwd, setValidMatchPwd] = useState(false)
-    const [matchPwdFocus, setMatchPwdFocus] = useState(false)
+    const [pwd, setPwd] = useState('');
+    const [matchPwd, setMatchPwd] = useState('');
+    const [pwdFocus, setPwdFocus] = useState(false);
+    const [validPwd, setValidPwd] = useState(false);
+    const [validMatchPwd, setValidMatchPwd] = useState(false);
+    const [matchPwdFocus, setMatchPwdFocus] = useState(false);
 
     const errRef = useRef();
 
     const [OTP, setOTP] = useState("");
     const [OTPFocus, setOTPFocus] = useState(false);
     const [validOTP, setValidOTP] = useState("");
-
     const [otpMatch, setOtpMatch] = useState("");
 
     useEffect(() => {
@@ -153,7 +152,7 @@ function ForgotPassword() {
                                             type="number"
                                             id="signupMobile"
                                             className="border my-3 border-gray-300 text-gray-900 text-md rounded-md  w-full p-3 ring-blue-300 ring-offset-1 focus:ring dark:text-white dark:focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                                            placeholder="Mobile"
+                                            placeholder="Mobile number"
                                             autoComplete="off"
                                             maxLength={10}
                                             required

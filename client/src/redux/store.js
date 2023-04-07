@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk';
 
 import loadingReducer from "./features/loadingSlice";
 import userReducer from "./features/userSlice";
@@ -19,11 +19,11 @@ const reducer = combineReducers({
     // doctor: doctorReducer
 })
 
-const persistedReducer = persistReducer(persistConfig, reducer)
+const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: [thunk]
-})
+});
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

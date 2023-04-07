@@ -9,7 +9,7 @@ function AppointmentList() {
     const [filtered, setFiltered] = useState("");
 
     const getAppointments = async () => {
-        const token = localStorage.getItem('admin')
+        const token = localStorage.getItem('admin');
         try {
             const { data } = await axios.get('/admin/getAps', {
                 headers: {
@@ -19,7 +19,7 @@ function AppointmentList() {
                 withCredentials: true,
             });
             setAppointments(data);
-            setFiltered(data)
+            setFiltered(data);
         } catch (error) {
             console.log(error);
         }
@@ -76,7 +76,50 @@ function AppointmentList() {
             return appointment.doctor.name.toLowerCase().match(search.toLowerCase());
         });
         setFiltered(result);
-    }, [search])
+    }, [search]);
+
+    const customStyles = {
+        headRow: {
+            style: {
+                backgroundColor: 'gray',
+            },
+        },
+        headCells: {
+            style: {
+                color: 'white',
+                fontSize: '16px',
+            },
+        },
+        rows: {
+            style: {
+                backgroundColor: 'gray',
+                color: 'white',
+            },
+        },
+        cells: {
+            style: {
+                fontSize: '14px',
+                color: 'black',
+            },
+        },
+        pagination: {
+            style: {
+                backgroundColor: 'gray',
+                color: 'white',
+            },
+        },
+        tableWrapper: {
+            style: {
+                paddingBottom: '20px', // Adds some padding at the bottom of the table
+            },
+        },
+        searchBox: {
+            style: {
+                color: 'white',
+                backgroundColor: 'gray',
+            },
+        },
+    };
 
     return (
         <div className="p-4 sm:ml-64">
@@ -96,10 +139,11 @@ function AppointmentList() {
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                     />}
+                    customStyles={customStyles}
                 />
             </div>
         </div>
     )
 }
 
-export default AppointmentList
+export default AppointmentList;

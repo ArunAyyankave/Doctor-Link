@@ -24,4 +24,4 @@ function DoctorRoutes() {
     )
 }
 
-export default DoctorRoutes
+export default DoctorRoutes;

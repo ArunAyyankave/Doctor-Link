@@ -12,6 +12,8 @@ router.get('/getUser', userController.getUser);
 router.get('/forgotPwd/mobileExist', userController.MobileExistForForgot);
 router.post('/forgotPwd', userController.newPassSet);
 
+router.post('/signin/google', userController.googleSignin);
+
 router.post('/docMobile', docController.mobileExist);
 router.post('/docSignup', docController.docSignup);
 

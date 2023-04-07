@@ -1,6 +1,6 @@
 const Doctor = require('../../models/doctorModel');
 const Appointment = require('../../models/appointmentModel');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 module.exports = {
     bookAppointment: async (req, res) => {

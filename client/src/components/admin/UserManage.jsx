@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../api/axios";
-import swal from 'sweetalert'
+import swal from 'sweetalert';
 import toast, { Toaster } from "react-hot-toast";
 
-const GET_USERS = '/admin/users'
-const CHANGE_BLOCK = '/admin/users/blockStatus'
+const GET_USERS = '/admin/users';
+const CHANGE_BLOCK = '/admin/users/blockStatus';
 
 function UserManage() {
 
   const [users, setUsers] = useState([]);
 
-  const token = localStorage.getItem('admin')
+  const token = localStorage.getItem('admin');
   useEffect(() => {
     axios.get(GET_USERS, {
       headers: {
@@ -19,9 +19,9 @@ function UserManage() {
       },
       withCredentials: true,
     }).then(({ data }) => {
-      setUsers(data.userDatas)
+      setUsers(data.userDatas);
     })
-  }, [])
+  }, []);
 
   const handleBlock = (id, status) => {
     swal({
@@ -41,7 +41,7 @@ function UserManage() {
             },
             withCredentials: true,
           }).then(response => {
-            setUsers(users.map(user => (user._id === id ? { ...user, blockStatus: !user.blockStatus } : user)))
+            setUsers(users.map(user => (user._id === id ? { ...user, blockStatus: !user.blockStatus } : user)));
             toast.success(`User ${status ? "unblocked" : "blocked"} successfully!`);
           })
         }
@@ -69,8 +69,8 @@ function UserManage() {
               </tr>
             </thead>
             <tbody>
-              {users.length ? users.map((user, key) =>
 
+              {users.length ? users.map((user, key) =>
                 <tr className="bg-[#189AB4] border-b border-[#05445E]" key={user._id}>
                   <th
                     scope="row"
@@ -89,8 +89,8 @@ function UserManage() {
                     </a>
                   </td>
                 </tr>
-              )
-                : <tr className=" p-4"><td>No users available</td></tr>}
+              ) : <tr className=" p-4"><td>No users available</td></tr>}
+
             </tbody>
           </table>
         </div>

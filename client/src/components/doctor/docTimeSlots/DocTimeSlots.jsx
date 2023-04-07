@@ -77,8 +77,6 @@ const AddTimeSlotForm = ({ doctorId }) => {
               pauseOnHover: true,
               draggable: true,
             });
-
-            console.log(response.data);
             //can handle the success response here, such as showing a success message or redirecting the user to a different page.
           } catch (error) {
             console.error(error);

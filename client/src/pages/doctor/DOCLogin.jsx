@@ -1,5 +1,5 @@
-import React from 'react'
-import DocLogin from '../../components/doctor/docLogin/DocLogin'
+import React from 'react';
+import DocLogin from '../../components/doctor/docLogin/DocLogin';
 import Footer from '../../components/user/UserFooter';
 
 function DoctorLogin() {
@@ -11,4 +11,4 @@ function DoctorLogin() {
   )
 }
 
-export default DoctorLogin
+export default DoctorLogin;

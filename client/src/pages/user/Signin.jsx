@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import UserFooter from '../../components/user/UserFooter';
 import UserLogin from '../../components/user/UserLogin';
 

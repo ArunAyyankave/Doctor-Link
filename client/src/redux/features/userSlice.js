@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import jwtDecode from "jwt-decode";
-import { signinThunk } from '../thunk/user'
+import { signinThunk } from '../thunk/user';
 
 export const checkIfUserLoggedIn = () => {
 
@@ -18,14 +18,14 @@ export const checkIfUserLoggedIn = () => {
 const initialState = {
     isLoggedIn: checkIfUserLoggedIn(),
     mobile: '',
-    name:'',
-    signin:{
-        isLoading:false,
-        isErr:false,
-        errMsg:""
+    name: '',
+    signin: {
+        isLoading: false,
+        isErr: false,
+        errMsg: ""
     }
 }
-    
+
 const userSlice = createSlice({
     name: 'user',
     initialState,
@@ -39,6 +39,9 @@ const userSlice = createSlice({
         userLogin: (state, action) => {
             state.isLoggedIn = true;
         },
+        clearError: (state, action) => {
+            state.signin.errMsg = ''
+        },
         userLogout: (state, action) => {
             state.isLoggedIn = false;
             state.mobile = '';
@@ -48,24 +51,24 @@ const userSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(signinThunk.pending, (state) => {
-          state.signin.isLoading = true;
+            state.signin.isLoading = true;
         });
-    
+
         builder.addCase(signinThunk.fulfilled, (state, action) => {
-          state.signin.isLoading = false;
-          state.signin.errMsg = '';
-          state.mobile = action.payload.mobile;
-          state.name = action.payload.name
-          localStorage.setItem('user', action.payload.accessToken);
-          state.isLoggedIn = true;
+            state.signin.isLoading = false;
+            state.signin.errMsg = '';
+            state.mobile = action.payload.mobile;
+            state.name = action.payload.name
+            localStorage.setItem('user', action.payload.accessToken);
+            state.isLoggedIn = true;
         });
-    
+
         builder.addCase(signinThunk.rejected, (state, action) => {
-          state.signin.isLoading = false;
-          state.signin.errMsg = action.payload.message
+            state.signin.isLoading = false;
+            state.signin.errMsg = action.payload.message
         });
-      },
+    },
 })
 
-export const { setUserDetails, userLogout, userLogin } = userSlice.actions;
+export const { setUserDetails, userLogout, userLogin, clearError } = userSlice.actions;
 export default userSlice.reducer;

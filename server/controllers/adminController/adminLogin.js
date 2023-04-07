@@ -1,6 +1,6 @@
-const admins = require('../../models/adminsModel')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const admins = require('../../models/adminsModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     adminLogin: async (req, res) => {
@@ -13,7 +13,7 @@ module.exports = {
                         if (!response) {
                             return res.sendStatus(401); //unauthorized
                         } else {
-                            const accessToken = jwt.sign({ id: admin._id }, 'secretKey', { expiresIn: '7d' });
+                            const accessToken = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
                             return res.status(200).json({ accessToken });
                         }
                     })

@@ -1,7 +1,7 @@
-import React from 'react'
-import ProfileAndBooking from '../../components/user/ProfileAndBooking'
-import UserFooter from '../../components/user/UserFooter'
-import UserNavbar from '../../components/user/UserNavbar'
+import React from 'react';
+import ProfileAndBooking from '../../components/user/ProfileAndBooking';
+import UserFooter from '../../components/user/UserFooter';
+import UserNavbar from '../../components/user/UserNavbar';
 
 function Profile() {
   return (
@@ -13,4 +13,4 @@ function Profile() {
   )
 }
 
-export default Profile
+export default Profile;

@@ -6,7 +6,7 @@ const verifyToken = async (req, res, next) => {
         const authHeader = req.header('Authorization');
         if (!authHeader) return res.status(401).json({ msg: 'No authentication token, access denied' });
         //else
-        const verified = jwt.verify(authHeader, 'secretKey');
+        const verified = jwt.verify(authHeader, process.env.JWT_SECRET);
         if (!verified) return res.status(401).json({ msg: "Token verification failed, authorization denied" });
         //else
         const docExist = await docs.findById(verified.id)

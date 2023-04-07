@@ -3,9 +3,7 @@ import axios from "../../api/axios";
 import { Chart as ChartJs, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
-
 ChartJs.register(ArcElement, Tooltip, Legend);
-
 
 function Dashboard() {
 
@@ -21,17 +19,16 @@ function Dashboard() {
       },
       withCredentials: true,
     }).then(({ data }) => {
-      console.log(data);
       setInfo(data)
       setDocs(data.docsPending)
     })
-  }, [])
+  }, []);
 
   const data = {
     labels: ['Patients', "Doctors", "Appointments"],
     datasets: [
       {
-        data: [info&&info.totalUsers, info&&info.totalDoctors, info&&info.totalBookings],
+        data: [info && info.totalUsers, info && info.totalDoctors, info && info.totalBookings],
         backgroundColor: ['#05445E', '#189AB4', '#75E6DA', "#D4F1F4"]
       }
     ]
@@ -44,7 +41,6 @@ function Dashboard() {
       },
     },
   };
-
 
   return (
     <div className="p-4 sm:ml-64 bg-[#05445E] h-screen">

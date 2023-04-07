@@ -1,6 +1,6 @@
-const doc = require('../../models/doctorModel')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const doc = require('../../models/doctorModel');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     mobileExist: (req, res) => {
@@ -23,14 +23,14 @@ module.exports = {
                 if (response) {
                     return res.sendStatus(409); //user already exist
                 } else {
-                    req.body.password = await bcrypt.hash(req.body.password, 10)
+                    req.body.password = await bcrypt.hash(req.body.password, 10);
                     await doc.create(req.body).then((response) => {
                         const accessToken = jwt.sign({
                             id: response._id
                         }, 'secretKey',
                             { expiresIn: '7d' }
                         );
-                        res.status(201).json({ accessToken })
+                        res.status(201).json({ accessToken });
                     })
                 }
             })
@@ -42,8 +42,8 @@ module.exports = {
     getDoctors: async (req, res) => {
         try {
             doc.find({ approved: true }).then(docDatas => {
-                res.status(200).json({ docDatas })
-            })
+                res.status(200).json({ docDatas });
+            });
         } catch (error) {
             console.log(error.message);
         }
@@ -54,14 +54,13 @@ module.exports = {
         doc.findOne({ _id }).then(response => {
             res.status(200).json(response);
         }).catch(err => {
-            console.log(err)
-            res.status(400).json({ message: 'error occured' })
-        })
+            console.log(err);
+            res.status(400).json({ message: 'error occured' });
+        });
     },
 
     searchDoctor: async (req, res) => {
         try {
-            console.log('rrrrr');
             const { query } = req.query;
             const results = await doc.find({
                 $or: [

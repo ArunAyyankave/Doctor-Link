@@ -13,9 +13,9 @@ function DoctorManage() {
   const items = ["All", "Approved", "Pending"];
   const [selectedItem, setSelectedItem] = useState(items[0]);
   const [isOpen, setIsOpen] = useState(false);
-  const [filteredData, setFilteredData] = useState([])
+  const [filteredData, setFilteredData] = useState([]);
 
-  const token = localStorage.getItem('admin')
+  const token = localStorage.getItem('admin');
   useEffect(() => {
     axios.get(GET_DCS, {
       headers: {
@@ -54,8 +54,6 @@ function DoctorManage() {
             `Doctor ${status ? "unblocked" : "blocked"} successfully!`
           );
         });
-      } else {
-        // Do nothing
       }
     });
   };
@@ -90,11 +88,9 @@ function DoctorManage() {
     }
   }
 
-
   useEffect(() => {
     setFilteredData(selectedItem === 'All' ? docs : selectedItem === 'Approved' ? docs.filter((doc) => doc.approved === true) : docs.filter((doc) => doc.approved === false))
-  }, [selectedItem, docs])
-
+  }, [selectedItem, docs]);
 
   return (
     <div className="p-4 relative sm:ml-64 bg-[#05445E] h-screen">

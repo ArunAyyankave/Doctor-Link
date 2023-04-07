@@ -3,12 +3,12 @@ const adminController = require('../controllers/adminController/adminLogin');
 const userController = require('../controllers/adminController/userController');
 const docController = require('../controllers/adminController/docController');
 const apsContorller = require('../controllers/adminController/appointmentController');
-const dashController = require('../controllers/adminController/dashboardController')
+const dashController = require('../controllers/adminController/dashboardController');
 const verifyToken = require('../middlewares/adminAuth');
 
 router.post('/signin', adminController.adminLogin);
 
-router.get('/dashboard', verifyToken, dashController.getInfo );
+router.get('/dashboard', verifyToken, dashController.getInfo);
 
 router.get('/users', verifyToken, userController.getUsers);
 router.put('/users/blockStatus/:_id', verifyToken, userController.blockUser);

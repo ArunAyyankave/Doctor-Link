@@ -3,7 +3,6 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { checkIfDocLoggedIn } from '../../redux/features/doctorSlice';
 // import { loginRoute } from '../constants/routes';
 
-
 const AuthenticatedRoute = ({ children }) => {
 
   let location = useLocation();

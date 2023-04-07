@@ -1,5 +1,5 @@
 import React from 'react';
-import './image.css'
+import './image.css';
 
 export const ImageModal = ({ imageUrl, onClose }) => {
   return (

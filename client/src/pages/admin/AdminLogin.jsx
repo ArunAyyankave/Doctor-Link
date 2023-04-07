@@ -1,5 +1,5 @@
-import React from 'react'
-import AdminLoginComp from '../../components/admin/AdminLogin'
+import React from 'react';
+import AdminLoginComp from '../../components/admin/AdminLogin';
 
 function AdminLogin() {
   return (
@@ -9,4 +9,4 @@ function AdminLogin() {
   )
 }
 
-export default AdminLogin
+export default AdminLogin;

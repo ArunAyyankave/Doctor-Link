@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 function UserFooter() {
   return (
@@ -47,4 +47,4 @@ function UserFooter() {
   )
 }
 
-export default UserFooter
+export default UserFooter;

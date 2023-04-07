@@ -1,5 +1,5 @@
 const Appointment = require('../../models/appointmentModel');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 module.exports = {
     getAps: async (req, res) => {
@@ -92,7 +92,6 @@ module.exports = {
                     },
                 },
             ]);
-
 
             res.json(appointments);
         } catch (error) {

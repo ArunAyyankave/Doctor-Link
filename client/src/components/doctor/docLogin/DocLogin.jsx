@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "../../../api/axios";
 import { useNavigate } from "react-router-dom";
 
-const DOCSIGNIN_URL = '/doctor/signin'
+const DOCSIGNIN_URL = '/doctor/signin';
 
 function DocLogin() {
 
@@ -16,11 +16,11 @@ function DocLogin() {
 
   useEffect(() => {
     mobileRef.current.focus();
-  }, [])
+  }, []);
 
   useEffect(() => {
     setErr('')
-  }, [mobile, password])
+  }, [mobile, password]);
 
   const handleSignin = async (e) => {
     e.preventDefault();
@@ -34,7 +34,7 @@ function DocLogin() {
         }
       );
 
-      const accessToken = data.accessToken
+      const accessToken = data.accessToken;
 
       localStorage.setItem("doc", accessToken);
       setMobile("");
@@ -55,6 +55,7 @@ function DocLogin() {
       }
     }
   }
+
   return (
     <div className="bg-gradient-to-r from-emerald-50 to-emerald-100">
       <div className="p-4">
@@ -72,7 +73,7 @@ function DocLogin() {
                 </h1>
               </div>
               <div className="mt-2 space-y-3">
-                {err && <p>{err}</p>}
+                {err && <p className="text-red-600">{err}</p>}
                 <form onSubmit={handleSignin}>
                   <input
                     ref={mobileRef}

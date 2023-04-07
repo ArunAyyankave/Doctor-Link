@@ -9,6 +9,6 @@ router.post('/completeprofile', verifyToken, docProfile.completeprofile);
 router.post('/addSlot', verifyToken, docProfile.addSlot);
 router.get('/getSlots', verifyToken, docProfile.getSlots);
 router.get('/getAps', verifyToken, docProfile.getAps);
-router.get('/dashboard', verifyToken, docProfile.getInfo)
+router.get('/dashboard', verifyToken, docProfile.getInfo);
 
 module.exports = router;
